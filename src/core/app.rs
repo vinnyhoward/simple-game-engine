@@ -5,9 +5,11 @@ use winit::event_loop::ActiveEventLoop;
 use winit::window::WindowId;
 
 use crate::core::Plugin;
+use crate::plugins::window::WindowConfig;
 
 pub struct App {
     pub window: Option<Window>,
+    pub window_config: Option<WindowConfig>,
     plugins: Vec<Box<dyn Plugin>>,
 }
 
@@ -15,6 +17,7 @@ impl App {
     pub fn new() -> Self {
         Self {
             window: None,
+            window_config: None,
             plugins: Vec::new(),
         }
     }
@@ -36,7 +39,12 @@ impl App {
 impl ApplicationHandler for App {
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
         if self.window.is_none() {
-            self.window = Some(event_loop.create_window(Window::default_attributes()).unwrap());
+            let attributes = self.window_config
+            .as_ref()
+            .map(|config| config.attributes.clone())
+            .unwrap_or_else(Window::default_attributes);
+            
+        self.window = Some(event_loop.create_window(attributes).unwrap());
         }
     }
 

@@ -2,4 +2,4 @@ mod plugin;
 mod state;
 mod events;
 
-pub use plugin::WindowPlugin; 
+pub use plugin::{WindowPlugin, WindowConfig}; 
