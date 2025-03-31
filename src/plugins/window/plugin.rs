@@ -1,6 +1,5 @@
 use winit::window::{Window, WindowAttributes};
-use crate::plugin::Plugin;
-use crate::app::App;
+use crate::core::{Plugin, App};
 
 pub struct WindowPlugin {
     window_attributes: WindowAttributes,
