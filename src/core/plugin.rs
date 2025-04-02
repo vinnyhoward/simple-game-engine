@@ -1,5 +1,5 @@
 use super::app::App;
 
 pub trait Plugin {
-    fn build(&self, app: &mut App);
+    fn build<'window>(&self, app: &mut App<'window>);
 } 

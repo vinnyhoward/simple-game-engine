@@ -1,7 +1,7 @@
 use winit::window::{Window, WindowAttributes};
 use crate::core::{Plugin, App};
 use super::state::WindowState;
-use super::events::handle_window_event;
+// use super::events::handle_window_event;
 
 pub struct WindowConfig {
     pub attributes: WindowAttributes,

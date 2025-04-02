@@ -6,18 +6,21 @@ use winit::window::WindowId;
 
 use crate::core::Plugin;
 use crate::plugins::window::WindowConfig;
+use crate::plugins::render::RenderState;
 
-pub struct App {
+pub struct App<'window> {
     pub window: Option<Window>,
     pub window_config: Option<WindowConfig>,
+    pub render_state: Option<RenderState<'window>>,
     plugins: Vec<Box<dyn Plugin>>,
 }
 
-impl App {
+impl<'window> App<'window> {
     pub fn new() -> Self {
         Self {
             window: None,
             window_config: None,
+            render_state: None,
             plugins: Vec::new(),
         }
     }
@@ -36,15 +39,15 @@ impl App {
     }
 }
 
-impl ApplicationHandler for App {
+impl<'window> ApplicationHandler for App<'window> {
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
         if self.window.is_none() {
             let attributes = self.window_config
-            .as_ref()
-            .map(|config| config.attributes.clone())
-            .unwrap_or_else(Window::default_attributes);
+                .as_ref()
+                .map(|config| config.attributes.clone())
+                .unwrap_or_else(Window::default_attributes);
             
-        self.window = Some(event_loop.create_window(attributes).unwrap());
+            self.window = Some(event_loop.create_window(attributes).unwrap());
         }
     }
 
